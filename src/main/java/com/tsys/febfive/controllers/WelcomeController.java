@@ -11,6 +11,5 @@ public class WelcomeController {
 	@GetMapping("/")
 	public String WelcomeMessage() {
 		return "Welcome to Feb Five API";
-	}
-	
+	}	
 }

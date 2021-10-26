@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tsys.febfive.entities.Category;
 import com.tsys.febfive.entities.SubCategory;
 import com.tsys.febfive.entities.UserPreference;
+import com.tsys.febfive.entities.Users;
+import com.tsys.febfive.request.SearchRequest;
 import com.tsys.febfive.services.SubCategoryService;
 
 @RestController
@@ -25,32 +27,72 @@ public class SubCategoryController {
 	@Autowired
 	private SubCategoryService subCategoryService;
 	
-	
 	@GetMapping(path = "/getAllSubCategory" )
-	public List<SubCategory> getAllSubCategory(){
+	public ResponseEntity<List<SubCategory>> getAllSubCategory(){
 		List<SubCategory> subCategories = subCategoryService.getAllSubCategory();
-		return subCategories;
+		if(!CollectionUtils.isEmpty(subCategories)) {
+			return ResponseEntity.status(HttpStatus.OK).body(subCategories);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(subCategories);
 	}
 	
 	@PostMapping(path = "/getAllSubCategoryByCategory", produces = "application/json")
-	public List<SubCategory> getAllSubCategoryByCategory(@RequestBody Category category){
-		return subCategoryService.getAllSubCategoryByCategory(category);
+	public ResponseEntity<List<SubCategory>> getAllSubCategoryByCategory(@RequestBody Category category){
+		if(category != null) {
+			List<SubCategory> subCategories =  subCategoryService.getAllSubCategoryByCategory(category);
+			if(!CollectionUtils.isEmpty(subCategories)) {
+				return ResponseEntity.status(HttpStatus.OK).body(subCategories);
+			}
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(subCategories);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
 	
 	@PostMapping(path = "/addAllSubCategoryByCategory", produces = "application/json")
 	public ResponseEntity<Boolean> addAllSubCategoryByCategory(@RequestBody List<UserPreference> userPreference){
 		if(!CollectionUtils.isEmpty(userPreference)) {
-			Boolean result =  subCategoryService.addAllSubCategoryByCategory(userPreference);
-			return ResponseEntity.status(HttpStatus.OK).body(result);
+			Boolean response =  subCategoryService.addAllSubCategoryByCategory(userPreference);
+			if(response) {
+				return ResponseEntity.status(HttpStatus.CREATED).body(response);
+			}
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Boolean.FALSE);
 	}
 	
 	@PutMapping(path = "/updateAllPrefernenceByCategory", produces = "application/json")
 	public ResponseEntity<Boolean> updateAllPreferenceByUserId(@RequestBody List<UserPreference> userPreference){
 		if(!CollectionUtils.isEmpty(userPreference)) {
-			Boolean result =  subCategoryService.updateAllPreferenceByUserId(userPreference);
-			return ResponseEntity.status(HttpStatus.OK).body(result);
+			Boolean response =  subCategoryService.updateAllPreferenceByUserId(userPreference);
+			if(response) {
+				return ResponseEntity.status(HttpStatus.OK).body(response);
+			}
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Boolean.FALSE);
+	}
+	
+	
+	@PostMapping(path = "/getAllUserSelectedCategory", produces = "application/json")
+	public ResponseEntity<List<SubCategory>> getAllUserSelectedCategory(@RequestBody Users users){
+		if(users != null) {
+			List<SubCategory> subCategories =  subCategoryService.getAllUserSelectedCategory(users);
+			if(!CollectionUtils.isEmpty(subCategories)) {
+				return ResponseEntity.status(HttpStatus.OK).body(subCategories);
+			}
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(subCategories);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+	}
+	
+	@PostMapping(path = "/searchInterest", produces = "application/json")
+	public ResponseEntity<List<Users>> searchInterest(@RequestBody SearchRequest request ){
+		if(request != null) {
+			List<Users> users =  subCategoryService.searchInterest(request);
+			if(!CollectionUtils.isEmpty(users)) {
+				return ResponseEntity.status(HttpStatus.OK).body(users);
+			}
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(users);
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}

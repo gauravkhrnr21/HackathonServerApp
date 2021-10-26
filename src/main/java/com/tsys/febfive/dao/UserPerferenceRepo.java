@@ -8,4 +8,5 @@ import com.tsys.febfive.entities.UserPreference;
 
 @Repository
 public interface UserPerferenceRepo extends JpaRepository<UserPreference, Integer>{
+	public int deleteByUserId(Integer userId);
 }

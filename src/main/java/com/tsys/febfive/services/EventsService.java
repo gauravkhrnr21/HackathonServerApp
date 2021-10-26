@@ -16,12 +16,16 @@ public class EventsService {
 		return eventRepo.findAll();
 	}
 
-	public void addEvent(Events evnet) {
-		eventRepo.save(evnet);
+	public Events addEvent(Events evnet) {
+		return eventRepo.save(evnet);
 	}
 
 	public List<Events> getAllEvents() {
 		return eventRepo.findAll();
 	}
-
+	
+	public Events getEventById(Events event) {
+		return eventRepo.findByEventId(event.getCategortId());
+	}
+	
 }

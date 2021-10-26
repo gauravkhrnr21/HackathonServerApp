@@ -6,6 +6,5 @@ import com.tsys.febfive.entities.Category;
 
 @Repository
 public interface CategoryRepo extends JpaRepository<Category, Integer>{
-
-
+	Category findByCategoryName(String categoryName);
 }

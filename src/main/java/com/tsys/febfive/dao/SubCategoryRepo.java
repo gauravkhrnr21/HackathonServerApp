@@ -7,6 +7,6 @@ import com.tsys.febfive.entities.SubCategory;
 
 @Repository
 public interface SubCategoryRepo extends JpaRepository<SubCategory, Integer>{
-
-
+	
+	SubCategory findBySubCategoryName(String subCategoryName);
 }

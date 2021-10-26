@@ -16,11 +16,13 @@ public class UserPreference {
 	@Column(unique = true, nullable = false)
 	private Integer userPreferenceId;
 	
-	private Integer userId;
-	
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private Integer subCategoryId;
 	
+	@Column(nullable = false)
+	private Integer userId;
+	
+	@Column(nullable = false)
 	private Integer categoryId;
 	
 	public UserPreference() {}

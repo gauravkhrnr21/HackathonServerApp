@@ -1,6 +1,7 @@
 package com.tsys.febfive.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,13 @@ public class FeedBackController {
 	
 	@PostMapping(path = "/addFeedback", produces = "application/json")
 	public ResponseEntity<FeedBack> addFeedback(@RequestBody FeedBack feedBack) {
-		FeedBack feedBacks =  feedBackService.addFeedBack(feedBack);
-		return ResponseEntity.status(200).body(feedBacks);
+		if(feedBack != null) {
+			FeedBack newFeedBack =  feedBackService.addFeedBack(feedBack);
+			if(newFeedBack != null) {
+				return ResponseEntity.status(HttpStatus.CREATED).body(newFeedBack);
+			}	
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(newFeedBack);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
 }

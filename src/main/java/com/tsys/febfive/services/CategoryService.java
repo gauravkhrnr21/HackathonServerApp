@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.tsys.febfive.dao.CategoryRepo;
 import com.tsys.febfive.dao.UserPerferenceRepo;
 import com.tsys.febfive.entities.Category;
+import com.tsys.febfive.entities.SubCategory;
 import com.tsys.febfive.entities.Users;
 
 @Service
@@ -39,5 +40,4 @@ public class CategoryService {
 		query.setParameter("userid", users.getUserId());
 		return query.getResultList();
 	}
-
 }

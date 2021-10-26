@@ -26,10 +26,10 @@ public class Events {
 	private String venue;
 
 	@Column(nullable = true)
-	private LocalDateTime fromDt = LocalDateTime.now();
+	private LocalDateTime fromDt;
 
 	@Column(nullable = true)
-	private LocalDateTime toDt = LocalDateTime.now();
+	private LocalDateTime toDt;
 	
 	@Column(nullable = true)
 	private LocalDateTime createdDt = LocalDateTime.now();

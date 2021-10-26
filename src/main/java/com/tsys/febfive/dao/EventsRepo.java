@@ -7,5 +7,5 @@ import com.tsys.febfive.entities.Events;
 
 @Repository
 public interface EventsRepo extends JpaRepository<Events, Integer> {
-
+	Events findByEventId(Integer eventId);
 }
